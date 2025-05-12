@@ -1,50 +1,82 @@
-# React + TypeScript + Vite
+# 🌐 Developer Portfolio – [Your Name]
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sleek, modern developer portfolio built using **React.js** and **Tailwind CSS**, designed to showcase my skills, projects, and contact information. Deployed on **Vercel** and connected to the **GitHub API** to dynamically display my latest repositories.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+👉 [View Live Portfolio](https://your-vercel-link.vercel.app)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## ✨ Features
 
-- Configure the top-level `parserOptions` property like this:
+- 📁 **Dynamic Projects Section** – Fetched directly from GitHub using the GitHub API with caching
+- 📱 **Responsive Design** – Fully mobile-friendly and optimized
+- ⚡ **Fast & Optimized** – Built with performance in mind
+- 🎨 **Styled with Tailwind CSS** – Clean and customizable design system
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🛠 Tech Stack
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Frontend:** React.js (Vite or Create React App)
+- **Styling:** Tailwind CSS
+- **APIs:** GitHub REST API
+- **Deployment:** Vercel
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+---
+
+## 🧠 How It Works
+
+- On page load, the Projects page fetches repositories from GitHub and caches them in `localStorage` for 24 hours.
+- Uses React `useEffect` hook for lifecycle management.
+- Custom components like `ProjectCardSkeleton` are used for loading states.
+- Layout and typography are powered by Tailwind CSS utility classes.
+
+---
+
+## 📦 Setup Instructions
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Sujal-Polawala/portfolio
+   cd portfolio
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Run the app:**
+   ```bash
+   npm run dev    # or npm start for Create React App
+   ```
+
+4. **(Optional)**: Add a GitHub token for higher rate limits:
+   - Create a `.env` file:
+     ```
+     REACT_APP_GITHUB_TOKEN=your_github_token
+     ```
+   - Add the token in your fetch call headers.
+
+5. **Deploy to Vercel:**
+   - Push your code to GitHub
+   - Import your repo on [Vercel](https://vercel.com/import)
+   - Set up environment variables if needed
+
+---
+
+## 📬 Contact
+
+Feel free to reach out if you'd like to collaborate!
+
+- Portfolio: [yourname.dev](https://yourname.dev)
+- Email: [sujalpolawala@gmail.com](mailto:sujalpolawala@gmail.com)
+- LinkedIn: [linkedin.com/in/sujalpolawaka](https://linkedin.com/in/sujalpolawala)
+
+---
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).

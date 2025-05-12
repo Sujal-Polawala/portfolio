@@ -103,7 +103,10 @@ const Home = () => {
             <p className="text-gray-400 text-center max-w-md">
             Frontend Developer | Anime Lover | Tech Enthusiast
             </p> */}
-              <ContactButton />
+              {/* Show only on large screens */}
+              <div className="hidden lg:block">
+                <ContactButton />
+              </div>
             </>
           )}
         </motion.div>
@@ -148,6 +151,14 @@ const Home = () => {
           )}
         </motion.div>
       </div>
+      {/* Show ContactButton only on mobile/small screens at the end */}
+      {!loading ? (
+        <div className="block lg:hidden mt-6">
+          <ContactButton />
+        </div>
+      ) : (
+        <div className="w-full h-12 bg-gray-700/60 animate-pulse rounded-xl mt-4"></div>
+      )}
     </div>
   );
 };

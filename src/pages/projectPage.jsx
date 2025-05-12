@@ -8,7 +8,7 @@ const CACHE_EXPIRY_HOURS = 24;
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
-  const Link = import.meta.env.GITHUB_LINK
+  const Link = import.meta.env.VITE_GITHUB_LINK
 
   useEffect(() => {
     const now = new Date().getTime();

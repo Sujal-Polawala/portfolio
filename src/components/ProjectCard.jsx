@@ -12,19 +12,21 @@ const ProjectsCard = () => (
       </h2>
 
       {/* ✅ Link wraps the icon */}
-      <Link to="/projects" data-tooltip-id="proj-tooltip" data-tooltip-content="Projects List">
+      <Link
+        to="/projects"
+        data-tooltip-id="proj-tooltip"
+        data-tooltip-content="Projects List"
+      >
         <FiArrowUpRight className="text-[#00f7ff] text-xl hover:scale-110 transition-transform duration-200" />
       </Link>
       <Tooltip id="proj-tooltip" place="top" effect="solid" />
     </div>
 
     <ul className="flex flex-col gap-3">
-      {projects.map((project, index) => (
+      {projects.map((project) => (
         <li
           key={project.name}
           className="flex flex-col group border-b border-gray-700 pb-2"
-          data-tooltip-id={`project-tooltip-${index}`}
-          data-tooltip-content={project.description}
         >
           <a
             href={project.url}
@@ -34,7 +36,11 @@ const ProjectsCard = () => (
           >
             {project.name}
           </a>
-          <Tooltip id={`project-tooltip-${index}`} place="top" effect="solid" />
+          {project.description && (
+            <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+              {project.description}
+            </p>
+          )}
         </li>
       ))}
     </ul>

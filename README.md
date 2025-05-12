@@ -4,7 +4,7 @@ A sleek, modern developer portfolio built using **React.js** and **Tailwind CSS*
 
 ## 🚀 Live Demo
 
-👉 [View Live Portfolio](https://your-vercel-link.vercel.app)
+👉 [View Live Portfolio](https://portfolio-alpha-beige-45.vercel.app/)
 
 ---
 
@@ -71,7 +71,7 @@ A sleek, modern developer portfolio built using **React.js** and **Tailwind CSS*
 
 Feel free to reach out if you'd like to collaborate!
 
-- Portfolio: [yourname.dev](https://yourname.dev)
+- Portfolio: [sujalpolawala.dev](https://portfolio-alpha-beige-45.vercel.app/)
 - Email: [sujalpolawala@gmail.com](mailto:sujalpolawala@gmail.com)
 - LinkedIn: [linkedin.com/in/sujalpolawaka](https://linkedin.com/in/sujalpolawala)
 

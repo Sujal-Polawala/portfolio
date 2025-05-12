@@ -54,52 +54,56 @@
 // export default CustomCursor;
 
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const CustomCursor = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const glowRef = useRef(null);
 
   const mouse = useRef({ x: 0, y: 0 });
   const pos = useRef({ x: 0, y: 0 });
-
-  // Lag offsets for dot and ring
   const dotOffset = useRef({ x: 0, y: 0 });
   const ringOffset = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    // Detect mobile/touch devices
+    const checkIsMobile = () => {
+      const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsMobile(touch);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+
+    if (isMobile) return; // Skip rest for mobile
+
     const handleMouseMove = (e) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    // document.body.style.cursor = 'none';
 
     const animate = () => {
-      // Smoothly move main position toward cursor
       pos.current.x += (mouse.current.x - pos.current.x) * 0.1;
       pos.current.y += (mouse.current.y - pos.current.y) * 0.1;
 
-      // Dot and ring offset trail further behind (more lag)
       dotOffset.current.x += (mouse.current.x - dotOffset.current.x) * 0.1;
       dotOffset.current.y += (mouse.current.y - dotOffset.current.y) * 0.1;
 
       ringOffset.current.x += (mouse.current.x - ringOffset.current.x) * 0.15;
       ringOffset.current.y += (mouse.current.y - ringOffset.current.y) * 0.15;
 
-      // Glow follows cursor closely
-      const glowTransform = `translate(${pos.current.x}px, ${pos.current.y}px) translate(-50%, -50%)`;
-      if (glowRef.current) glowRef.current.style.transform = glowTransform;
+      if (glowRef.current)
+        glowRef.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px) translate(-50%, -50%)`;
 
-      // Ring lags behind
-      const ringTransform = `translate(${ringOffset.current.x}px, ${ringOffset.current.y}px) translate(-50%, -50%)`;
-      if (ringRef.current) ringRef.current.style.transform = ringTransform;
+      if (ringRef.current)
+        ringRef.current.style.transform = `translate(${ringOffset.current.x}px, ${ringOffset.current.y}px) translate(-50%, -50%)`;
 
-      // Dot lags behind more
-      const dotTransform = `translate(${dotOffset.current.x}px, ${dotOffset.current.y}px) translate(-50%, -50%)`;
-      if (dotRef.current) dotRef.current.style.transform = dotTransform;
+      if (dotRef.current)
+        dotRef.current.style.transform = `translate(${dotOffset.current.x}px, ${dotOffset.current.y}px) translate(-50%, -50%)`;
 
       requestAnimationFrame(animate);
     };
@@ -107,26 +111,24 @@ const CustomCursor = () => {
     animate();
 
     return () => {
+      window.removeEventListener('resize', checkIsMobile);
       document.removeEventListener('mousemove', handleMouseMove);
-      document.body.style.cursor = '';
     };
-  }, []);
+  }, [isMobile]);
+
+  // ✅ Skip rendering cursor for mobile
+  if (isMobile) return null;
 
   return (
     <>
-      {/* Glowing background blur */}
       <div
         ref={glowRef}
         className="fixed top-0 left-0 w-[200px] h-[200px] rounded-full bg-cyan-400 opacity-30 blur-[50px] pointer-events-none z-[9997] transition-transform"
       />
-
-      {/* Outer ring */}
       <div
         ref={ringRef}
         className="fixed top-0 left-0 w-14 h-14 border border-cyan-900 rounded-full pointer-events-none z-[9998] transition-transform"
       />
-
-      {/* Center dot */}
       <div
         ref={dotRef}
         className="fixed top-0 left-0 w-3 h-3 bg-black rounded-full pointer-events-none z-[9999] transition-transform"

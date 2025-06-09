@@ -41,6 +41,43 @@ const ProjectsCard = () => (
               {project.description}
             </p>
           )}
+
+          {/* ✅ Conditional Demo Links */}
+          {project.demos && (
+            <div className="flex gap-4 mt-1">
+              {project.demos.user && (
+                <a
+                  href={project.demos.user}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-[#00f7ff] hover:underline"
+                >
+                  User Demo
+                </a>
+              )}
+              {project.demos.admin && (
+                <a
+                  href={project.demos.admin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-[#00f7ff] hover:underline"
+                >
+                  Admin/Seller Demo
+                </a>
+              )}
+            </div>
+          )}
+          {project.Credentials && (
+            <div className="mt-1 text-xs text-gray-400">
+              {project.Credentials.admin && (
+                <p>
+                  <span className="text-white">Admin Login:</span>{" "}
+                  {project.Credentials.admin.username} /{" "}
+                  {project.Credentials.admin.password}
+                </p>
+              )}
+            </div>
+          )}
         </li>
       ))}
     </ul>

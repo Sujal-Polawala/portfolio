@@ -5,7 +5,7 @@ import ProjectsCard from "../components/ProjectCard.jsx";
 import TechStackCard from "../components/TechStackCard.jsx";
 import EducationCard from "../components/EducationCard.jsx";
 import CertificationCard from "../components/CertificationCard.jsx";
-import resume from "../resume/Sujal-Polawala-Software-Developer(1).pdf";
+import resume from "../resume/Sujal-Polawala-Software-Developer.pdf";
 import avatarImage from "../assests/Sujal-Developer.png";
 import { FiDownload } from "react-icons/fi";
 import ContactButton from "../components/ContactButton.jsx";

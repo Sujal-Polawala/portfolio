@@ -7,7 +7,6 @@ const projects = [
       user: "https://major-project-three-beta.vercel.app/",
       admin: "https://trynbuy-admin.vercel.app", 
     },
-    deployment: "https://major-project-three-beta.vercel.app/",
     Credentials: {
       admin:{
         username: "admin123",

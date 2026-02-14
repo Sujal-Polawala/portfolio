@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ProjectCardSkeleton from "../skeletons/ProjectCardSkeleton";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
-import { FiGithub, FiExternalLink, FiFolder } from "react-icons/fi";
+import { FiGithub, FiExternalLink, FiCode } from "react-icons/fi";
 
 const CACHE_KEY = "githubProjects";
 const CACHE_TIMESTAMP_KEY = "githubProjectsTimestamp";
@@ -62,7 +62,7 @@ const ProjectsPage = () => {
           className="text-center"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <FiFolder className="text-cyan-400 text-3xl" />
+            <FiCode className="text-cyan-400 text-3xl" />
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
               My <span className="text-cyan-400">Projects</span>
             </h1>

@@ -19,7 +19,7 @@ const Breadcrumbs = () => {
 
           return (
             <li key={to} className="flex items-center space-x-2">
-              <span className="mx-1">{">"}</span>
+              <span className="mx-1 text-cyan-400/50">/</span>
               {isLast ? (
                 <span className="text-white capitalize">{value}</span>
               ) : (

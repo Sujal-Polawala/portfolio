@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import ProjectCardSkeleton from "../skeletons/ProjectCardSkeleton";
-import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs"; // Adjust the import path as necessary
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
+import { FiGithub, FiExternalLink, FiFolder } from "react-icons/fi";
 
 const CACHE_KEY = "githubProjects";
 const CACHE_TIMESTAMP_KEY = "githubProjectsTimestamp";
@@ -8,8 +10,8 @@ const CACHE_EXPIRY_HOURS = 24;
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
-  const Link = import.meta.env.VITE_GITHUB_LINK
-  console.log("GitHub Link:", Link);
+  const [loading, setLoading] = useState(true);
+  const Link = import.meta.env.VITE_GITHUB_LINK;
 
   useEffect(() => {
     const now = new Date().getTime();
@@ -23,12 +25,11 @@ const ProjectsPage = () => {
 
     if (isCacheValid) {
       setProjects(JSON.parse(cachedProjects));
+      setLoading(false);
     } else {
       const fetchProjects = async () => {
         try {
-          const response = await fetch(
-            Link
-          );
+          const response = await fetch(Link);
           if (!response.ok) throw new Error("Failed to fetch");
           const data = await response.json();
           setProjects(data);
@@ -36,64 +37,113 @@ const ProjectsPage = () => {
           localStorage.setItem(CACHE_TIMESTAMP_KEY, now.toString());
         } catch (error) {
           console.error("Error fetching GitHub repos:", error);
+        } finally {
+          setLoading(false);
         }
       };
 
       fetchProjects();
     }
-  }, []);
+  }, [Link]);
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-[#0f0f0f] via-[#1a1a1a] to-[#0f0f0f] text-white px-4 sm:px-8 md:px-16 py-14">
+    <section className="min-h-screen bg-gradient-to-br from-[#0a0a0f] via-[#16151c] to-[#1a1a1f] text-white px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-8 sm:pb-12">
       {/* Breadcrumb */}
-      <Breadcrumbs />
+      <div className="max-w-7xl mx-auto mb-8">
+        <Breadcrumbs />
+      </div>
 
-      <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-10 tracking-wide text-cyan-400 drop-shadow">
-        My Projects
-      </h1>
+      {/* Header */}
+      <div className="max-w-7xl mx-auto mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <FiFolder className="text-cyan-400 text-3xl" />
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
+              My <span className="text-cyan-400">Projects</span>
+            </h1>
+          </div>
+          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mx-auto mb-4"></div>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            A collection of my work showcasing full-stack development, modern technologies, and problem-solving skills.
+          </p>
+        </motion.div>
+      </div>
 
-      <div className="h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar">
-        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {projects.length === 0 ? (
-            <>
-              {[...Array(8)].map((_, index) => (
-                <ProjectCardSkeleton key={index} />
-              ))}
-            </>
-          ) : (
-            projects.map((project) => (
-              <div
+      {/* Projects Grid */}
+      <div className="max-w-7xl mx-auto">
+        {loading ? (
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {[...Array(8)].map((_, index) => (
+              <ProjectCardSkeleton key={index} />
+            ))}
+          </div>
+        ) : projects.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-gray-400 text-lg">No projects found.</p>
+          </div>
+        ) : (
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {projects.map((project, index) => (
+              <motion.div
                 key={project.id}
-                className="bg-[#1e1e1e] border border-[#2e2e2e] hover:border-cyan-400 transition-all duration-300 rounded-2xl p-6 shadow-md hover:shadow-cyan-500/20 flex flex-col justify-between"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden"
               >
-                <div>
-                  <h3 className="text-xl font-bold text-cyan-300 truncate">
-                    {project.name}
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-2 line-clamp-3 min-h-[60px]">
+                {/* Hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-blue-600/0 group-hover:from-cyan-500/10 group-hover:to-blue-600/10 transition-all duration-300"></div>
+
+                <div className="relative z-10 flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors line-clamp-2 flex-1">
+                      {project.name}
+                    </h3>
+                    <a
+                      href={project.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-gray-800/50 rounded-lg hover:bg-cyan-500/20 transition-colors ml-2 flex-shrink-0"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <FiGithub className="text-gray-400 group-hover:text-cyan-400 transition-colors" />
+                    </a>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-gray-400 mb-4 line-clamp-3 min-h-[60px] leading-relaxed flex-1">
                     {project.description || "No description available."}
                   </p>
-                </div>
 
-                <div className="mt-4 flex justify-between items-center">
-                  <a
-                    href={project.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
-                  >
-                    View Repo
-                  </a>
-                  {project.language && (
-                    <span className="bg-[#333] text-cyan-300 text-xs px-3 py-1 rounded-full">
-                      {project.language}
-                    </span>
-                  )}
+                  {/* Footer */}
+                  <div className="mt-auto pt-4 border-t border-gray-700/50 flex items-center justify-between">
+                    <a
+                      href={project.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg text-sm font-medium hover:shadow-lg hover:shadow-cyan-500/50 transition-all group/link"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <span>View Repo</span>
+                      <FiExternalLink className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                    </a>
+                    {project.language && (
+                      <span className="bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs px-3 py-1 rounded-full font-medium">
+                        {project.language}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))
-          )}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
